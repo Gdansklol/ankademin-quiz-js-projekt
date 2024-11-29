@@ -33,14 +33,14 @@
 
             <fieldset>
                 <legend>2. Spaniens huvudstad är Barcelona? (Sant/Falskt)</legend>
-                <label>
-                    <input type="radio" name="quiz2" value="Sant" /> Sant
+                <label for="quiz2-sant">
+                    <input type="radio" id="quiz2-sant" name="quiz2" value="Sant" /> Sant
                 </label>
-                <label>
-                    <input type="radio" name="quiz2" value="Falskt" /> Falskt
+                <label for="quiz2-falskt">
+                    <input type="radio" id="quiz2-falskt" name="quiz2" value="Falskt" /> Falskt
                 </label>
             </fieldset>
-
+            
             <fieldset>
                 <legend>3. Sydkoreas huvudstad är Seoul? (Sant/Falskt)</legend>
                 <label for="quiz3-sant">
@@ -51,14 +51,14 @@
                 </label>
             </fieldset>
             
-
+            <p id="result-message"></p>
             <button type="button" id="submit-quiz">Visa Resultat</button>
+            <button type="button" id="reset-button">Återställ Quiz</button>
         </section>
 
         <section id="result-container">
             <ul id="result-list"></ul>
         </section>
-
     </div>
 </body>
 </html>
