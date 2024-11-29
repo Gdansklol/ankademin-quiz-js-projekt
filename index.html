@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ankademin Quiz App</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="quiz-container">
@@ -12,8 +13,11 @@
             <h1>Ankademin FE24 Quiz</h1>
             <h3>av Cruella Båmi १✌˚◡˚✌५</h3>
             <h2>Välkommen till quizet!</h2>
-            <button type="button" id="dark-mode-btn">Mörkt Läge</button>
-            <button type="button" id="light-mode-btn">Ljust Läge</button>
+            
+            <div class="mode-switch">
+                <button type="button" id="dark-mode-btn">Mörkt Läge</button>
+                <button type="button" id="light-mode-btn">Ljust Läge</button>
+            </div>
         </header>
 
         <section id="quiz-form">
@@ -33,8 +37,7 @@
         <section id="result-container">
             <ul id="result-list"></ul>
         </section>
-    </div>
 
-    <script src="script.js"></script>
+    </div>
 </body>
 </html>
