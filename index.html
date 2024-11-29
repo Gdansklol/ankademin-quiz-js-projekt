@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,34 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main>
-        <h1>Ankademin Quiz App</h1>
-    </main>
-    
+    <div class="quiz-container">
+        <header>
+            <h1>Ankademin FE24 Quiz</h1>
+            <h3>av Cruella Båmi १✌˚◡˚✌५</h3>
+            <h2>Välkommen till quizet!</h2>
+            <button type="button" id="dark-mode-btn">Mörkt Läge</button>
+            <button type="button" id="light-mode-btn">Ljust Läge</button>
+        </header>
+
+        <section id="quiz-form">
+            <fieldset>
+                <legend>1. Tysklands huvudstad är Frankfurt? (Sant/Falskt)</legend>
+                <label for="quiz1-sant">
+                    <input type="radio" id="quiz1-sant" name="quiz1" value="Sant" /> Sant
+                </label>
+                <label for="quiz1-falskt">
+                    <input type="radio" id="quiz1-falskt" name="quiz1" value="Falskt" /> Falskt
+                </label>
+            </fieldset>
+
+            <button type="button" id="submit-quiz">Visa Resultat</button>
+        </section>
+
+        <section id="result-container">
+            <ul id="result-list"></ul>
+        </section>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
