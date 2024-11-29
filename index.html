@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ankademin Quiz App</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script src="script.js" type="module" defer></script>
 </head>
 <body>
+
     <div class="quiz-container">
         <header>
             <h1>Ankademin FE24 Quiz</h1>
             <h3>av Cruella Båmi १✌˚◡˚✌५</h3>
             <h2>Välkommen till quizet!</h2>
-            
             <div class="mode-switch">
                 <button type="button" id="dark-mode-btn">Mörkt Läge</button>
                 <button type="button" id="light-mode-btn">Ljust Läge</button>
@@ -22,43 +22,51 @@
 
         <section id="quiz-form">
             <fieldset>
-                <legend>1. Tysklands huvudstad är Frankfurt? (Sant/Falskt)</legend>
-                <label for="quiz1-sant">
-                    <input type="radio" id="quiz1-sant" name="quiz1" value="Sant" /> Sant
+                <legend>Fråga 1</legend>
+                <label>
+                    <input type="radio" name="quiz1" value="1">
+                    <span>Alternativ 1</span>
                 </label>
-                <label for="quiz1-falskt">
-                    <input type="radio" id="quiz1-falskt" name="quiz1" value="Falskt" /> Falskt
+                <label>
+                    <input type="radio" name="quiz1" value="2">
+                    <span>Alternativ 2</span>
                 </label>
             </fieldset>
 
             <fieldset>
-                <legend>2. Spaniens huvudstad är Barcelona? (Sant/Falskt)</legend>
-                <label for="quiz2-sant">
-                    <input type="radio" id="quiz2-sant" name="quiz2" value="Sant" /> Sant
+                <legend>Fråga 2</legend>
+                <label>
+                    <input type="radio" name="quiz2" value="1">
+                    <span>Alternativ 1</span>
                 </label>
-                <label for="quiz2-falskt">
-                    <input type="radio" id="quiz2-falskt" name="quiz2" value="Falskt" /> Falskt
+                <label>
+                    <input type="radio" name="quiz2" value="2">
+                    <span>Alternativ 2</span>
                 </label>
             </fieldset>
             
             <fieldset>
-                <legend>3. Sydkoreas huvudstad är Seoul? (Sant/Falskt)</legend>
-                <label for="quiz3-sant">
-                    <input type="radio" id="quiz3-sant" name="quiz3" value="Sant" /> Sant
+                <legend>Fråga 3</legend>
+                <label>
+                    <input type="radio" name="quiz3" value="1">
+                    <span>Alternativ 1</span>
                 </label>
-                <label for="quiz3-falskt">
-                    <input type="radio" id="quiz3-falskt" name="quiz3" value="Falskt" /> Falskt
+                <label>
+                    <input type="radio" name="quiz3" value="2">
+                    <span>Alternativ 2</span>
                 </label>
             </fieldset>
-            
-            <p id="result-message"></p>
-            <button type="button" id="submit-quiz">Visa Resultat</button>
-            <button type="button" id="reset-button">Återställ Quiz</button>
         </section>
 
-        <section id="result-container">
+        <section id="result-container" style="display: none;">
+            <p id="result-message"></p>
             <ul id="result-list"></ul>
         </section>
+
+        <div class="quiz-controls">
+            <button type="button" id="submit-quiz">Visa Resultat</button>
+        </div>
     </div>
+
 </body>
 </html>

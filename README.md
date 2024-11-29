@@ -17,3 +17,17 @@
 
 ## CSS HEX Colors
 link : (https://www.w3schools.com/css/css_colors_hex.asp)
+
+<hr>
+
+## Projektstruktur
+- **HTML**: Enkel och tillgänglig struktur med sektioner för quiz och resultat.
+- **CSS**: Stöd för mörkt/ljust läge, förbättrad läsbarhet och användarupplevelse.
+- **JavaScript**: Modulärt data (`quizData.js`) och funktionsbaserad design.
+
+## Huvudfunktioner
+1. Växla mellan mörkt/ljust läge.
+2. Dynamisk rendering av quiz och validering av svar.
+3. Beräkning av resultat och visning av meddelande baserat på prestation.
+
+
