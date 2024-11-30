@@ -12,3 +12,7 @@ body.light-mode {
     background-color: #f3f7da;
     color: #000000;
 }
+
+#result-container {
+    display: none;
+}

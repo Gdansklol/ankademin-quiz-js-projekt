@@ -15,43 +15,40 @@ let switchedLightMode = () => {
 
 let startQuiz = () => {
     let quizForm = document.getElementById("quiz-form");
-    let fieldsets = quizForm.querySelectorAll("fieldset");
 
-    quizData.forEach((quiz, index) => {
-        let fieldset = fieldsets[index];
-        if (!fieldset) return;
+    quizData.forEach((quiz) => {
+        let fieldset = document.createElement("fieldset");
+        let legend = document.createElement("legend");
+        legend.textContent = quiz.title;
+        fieldset.append(legend);
 
-        fieldset.querySelector("legend").textContent = quiz.title;
-
-        let labels = fieldset.querySelectorAll("label");
         quiz.options.forEach((option, optionIndex) => {
-            let label = labels[optionIndex];
-            if (label) {
-                let input = label.querySelector("input");
-                let span = label.querySelector("span");
-                input.name = quiz.id;
-                input.value = optionIndex + 1; 
-                span.textContent = option;
-            }
+            let label = document.createElement("label");
+            let input = document.createElement("input");
+            input.type = "radio";
+            input.name = quiz.id;
+            input.value = optionIndex + 1;
+
+            let span = document.createElement("span");
+            span.textContent = option;
+
+            label.append(input);
+            label.append(span);
+            fieldset.append(label);
         });
+
+        quizForm.append(fieldset);
     });
 };
 
 let checkAllAnswered = () => {
-    let allQuestions = [...document.querySelectorAll("fieldset")];
-    let checkedAllAnswers = [];
-
-    allQuestions.forEach((question) => {
-        let selectedAnswer = [...question.querySelectorAll('input[type="radio"]:checked')];
-        if (selectedAnswer.length > 0) {
-            checkedAllAnswers.push(question); 
-        }
-    });
-
-    let unansweredQuestions = allQuestions.filter((question) => !checkedAllAnswers.includes(question));
+    let allQuestions = [...document.querySelectorAll("fieldset")]; 
+    let unansweredQuestions = allQuestions.filter(
+        (question) => !question.querySelector('input[type="radio"]:checked')
+    ); 
 
     if (unansweredQuestions.length > 0) {
-        alert("Du måste svara på alla frågor!"); 
+        alert("Du måste svara på alla frågor!");
         return false;
     }
     return true;
@@ -61,24 +58,34 @@ let calculateResults = () => {
     if (!checkAllAnswered()) return;
 
     let score = 0;
+    let selectedAnswers = []; 
     let resultList = document.getElementById("result-list");
-    resultList.textContent = ""; 
+    resultList.textContent = "";
 
     quizData.forEach((quiz, index) => {
         let selectedOption = document.querySelector(`input[name="${quiz.id}"]:checked`);
         let resultItem = document.createElement("li");
 
-        if (selectedOption && quiz.correct.includes(parseInt(selectedOption.value))) {
-            score++;
-            resultItem.textContent = `Fråga ${index + 1}: Rätt!`;
-            resultItem.style.color = "green";
+        if (selectedOption) {
+            selectedAnswers.push(parseInt(selectedOption.value)); 
+            if (quiz.correct.includes(parseInt(selectedOption.value))) {
+                score++;
+                resultItem.textContent = `Fråga ${index + 1}: Rätt!`;
+                resultItem.style.color = "green";
+            } else {
+                resultItem.textContent = `Fråga ${index + 1}: Fel!`;
+                resultItem.style.color = "red";
+            }
         } else {
-            resultItem.textContent = `Fråga ${index + 1}: Fel!`;
-            resultItem.style.color = "red";
+            resultItem.textContent = `Fråga ${index + 1}: Inget svar!`;
+            resultItem.style.color = "gray";
         }
 
-        resultList.appendChild(resultItem);
+        resultList.append(resultItem);
     });
+
+    let sortedAnswers = [...selectedAnswers].sort((a, b) => a - b); 
+    console.log("Sorted Answers:", sortedAnswers);
 
     let percentage = (score / quizData.length) * 100;
     let resultMessage = document.getElementById("result-message");
@@ -100,10 +107,6 @@ let calculateResults = () => {
 document.getElementById("dark-mode-btn").addEventListener("click", switchedDarkMode);
 document.getElementById("light-mode-btn").addEventListener("click", switchedLightMode);
 
-document.getElementById("submit-quiz").addEventListener("click", () => {
-    if (checkAllAnswered()) {
-        calculateResults();
-    }
-});
+document.getElementById("submit-quiz").addEventListener("click", calculateResults);
 
 startQuiz();
