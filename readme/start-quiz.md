@@ -1,5 +1,27 @@
 # Steg-för-steg för att förstå och implementera koden
 
+## Projektstruktur
+
+- HTML
+Grundstruktur som innehåller sektioner för quiz och resultat.
+ Dynamisk data hanteras av JavaScript.
+
+- CSS
+Stöd för mörkt och ljust läge.
+Enkel, responsiv design för bättre läsbarhet.
+
+- JavaScript
+Modulär design med separata funktioner för rendering, eventhantering och resultatberäkning.
+
+
+- Användning
+1. Starta quizet: Svara på alla frågor.
+2. Växla läge: Använd knapparna för att växla mellan 
+    mörkt och ljust läge.
+3. Visa resultat: Klicka på "Visa Resultat" för att se dina 
+    poäng och detaljerad feedback.
+
+
 1. **Hämta quiz-formuläret:**
 ```js
    let quizForm = document.getElementById("quiz-form");

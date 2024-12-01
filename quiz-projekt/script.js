@@ -1,20 +1,17 @@
 import { quizData } from "./quizData.js";
 
-let body = document.body;
-let container = document.querySelector(".quiz-container");
-
-let switchedDarkMode = () => {
-    body.classList.remove("light-mode");
-    body.classList.add("dark-mode");
+let toggleMode = (mode) => {
+    document.body.classList.remove("dark-mode", "light-mode");
+    document.body.classList.add(`${mode}-mode`);
 };
 
-let switchedLightMode = () => {
-    body.classList.remove("dark-mode");
-    body.classList.add("light-mode");
-};
+document.querySelectorAll(".mode-btn").forEach((btn) => {
+    btn.addEventListener("click", () => toggleMode(btn.dataset.mode));
+});
 
 let startQuiz = () => {
     let quizForm = document.getElementById("quiz-form");
+    quizForm.innerHTML = ""; 
 
     quizData.forEach((quiz) => {
         let fieldset = document.createElement("fieldset");
@@ -32,8 +29,7 @@ let startQuiz = () => {
             let span = document.createElement("span");
             span.textContent = option;
 
-            label.append(input);
-            label.append(span);
+            label.append(input, span);
             fieldset.append(label);
         });
 
@@ -42,15 +38,17 @@ let startQuiz = () => {
 };
 
 let checkAllAnswered = () => {
-    let allQuestions = [...document.querySelectorAll("fieldset")]; 
+    let allQuestions = [...document.querySelectorAll("fieldset")];
     let unansweredQuestions = allQuestions.filter(
         (question) => !question.querySelector('input[type="radio"]:checked')
-    ); 
+    );
 
     if (unansweredQuestions.length > 0) {
         alert("Du måste svara på alla frågor!");
         return false;
     }
+
+    alert("Fantastiskt! Du har svarat på alla frågor!");
     return true;
 };
 
@@ -58,17 +56,18 @@ let calculateResults = () => {
     if (!checkAllAnswered()) return;
 
     let score = 0;
-    let selectedAnswers = []; 
+    let selectedAnswers = [];
     let resultList = document.getElementById("result-list");
-    resultList.textContent = "";
+    resultList.textContent = ""; 
 
     quizData.forEach((quiz, index) => {
         let selectedOption = document.querySelector(`input[name="${quiz.id}"]:checked`);
         let resultItem = document.createElement("li");
 
         if (selectedOption) {
-            selectedAnswers.push(parseInt(selectedOption.value)); 
-            if (quiz.correct.includes(parseInt(selectedOption.value))) {
+            let selectedValue = parseInt(selectedOption.value);
+            selectedAnswers.push(selectedValue); 
+            if (quiz.correct.includes(selectedValue)) {
                 score++;
                 resultItem.textContent = `Fråga ${index + 1}: Rätt!`;
                 resultItem.style.color = "green";
@@ -83,9 +82,6 @@ let calculateResults = () => {
 
         resultList.append(resultItem);
     });
-
-    let sortedAnswers = [...selectedAnswers].sort((a, b) => a - b); 
-    console.log("Sorted Answers:", sortedAnswers);
 
     let percentage = (score / quizData.length) * 100;
     let resultMessage = document.getElementById("result-message");
@@ -103,9 +99,6 @@ let calculateResults = () => {
 
     document.getElementById("result-container").style.display = "block";
 };
-
-document.getElementById("dark-mode-btn").addEventListener("click", switchedDarkMode);
-document.getElementById("light-mode-btn").addEventListener("click", switchedLightMode);
 
 document.getElementById("submit-quiz").addEventListener("click", calculateResults);
 
