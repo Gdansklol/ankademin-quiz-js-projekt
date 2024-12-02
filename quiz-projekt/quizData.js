@@ -41,6 +41,60 @@ export const quizData = [
         options: ["a. Brun", "b. Grön", "c. Rosa", "d. Gul"],
         correct: [2, 4]
     },
-    
+    {
+        id: "quiz8",
+        title: "8. Välj två av alternativen som stämmer om Pablo Picasso: (Välj två alternativ)",
+        options: [
+          "a. En mästare inom kubismen",
+          "b. Näckrosor",
+          "c. Flickorna från Avignon",
+          "d. En italiensk målare",
+        ],
+        correct: [1, 3],
+      },
+      {
+        id: "quiz9",
+        title: "9. Vilka två påståenden om Etiopiens Yirgacheffe-kaffe är korrekta? (Välj två alternativ)",
+        options: [
+          "a. Yirgacheffe ligger i norra Etiopien",
+          "b. Kallas för 'Kaffens lilla prins'",
+          "c. De gröna bönorna har hög densitet och en blåaktig färg",
+          "d. Kännetecknas av en söt smak med mogen frukt och blommiga aromer",
+        ],
+        correct: [3, 4],
+      },
+        {
+            id: "quiz10",
+            title: "10. På Mount Rushmore finns ansikten av fyra amerikanska presidenter. En av dem är George Washington. Välj namnen på de andra tre presidenterna. (Välj tre av alternativen)",
+            options: [
+                "a.Thomas Jefferson",
+                "b.Theodore Roosevelt",
+                "c.Zachary Taylor",
+                "d.Abraham Lincoln"
+            ],
+            correct: [1, 2, 4]
+        },
+        {
+            id: "quiz11",
+            title: "11. Välj tre av alternativen som är relaterade till Kroatien i Östeuropa. (Välj tre av alternativen)",
+            options: [
+                "a. Krka nationalpark",
+                "b. Tbilisi",
+                "c. Zagreb",
+                "d. Plitvicesjöarnas nationalpark"
+            ],
+            correct: [1, 3, 4]
+        },
+        {
+            id: "quiz12",
+            title: "12. Välj tre av alternativen som är relaterade till Kanada. (Välj tre av alternativen)",
+            options: [
+                "a. Vancouver",
+                "b. Ottawa",
+                "c. Grand Canyon",
+                "d. Lönnsirap"
+            ],
+            correct: [1, 2, 4]
+        }
 ];
 

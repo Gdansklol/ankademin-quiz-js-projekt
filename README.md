@@ -53,20 +53,6 @@ Resultatet klassificeras:
 50%-75%: Bra (orange).
 > 75%: Riktigt bra jobbat (grönt)
 
-```js
-    let percentage = (score / quizData.length) * 100;
-    let resultMessage = document.getElementById("result-message");
-
-    if (percentage < 50) {
-        resultMessage.textContent = "50%: Underkänt";
-        resultMessage.style.color = "red";
-    } else if (percentage <= 75) {
-        resultMessage.textContent = "50%-75%: Bra ";
-        resultMessage.style.color = "orange";
-    } else {
-        resultMessage.textContent = "75%: Riktigt bra jobbat ";
-    }
-```
 ### 3.3. Visning av detaljerat resultat
 
 - Användarens svar matchas med fråge-ID i quizData.
@@ -84,26 +70,4 @@ Resultatet klassificeras:
     och återanvändbarhet.
 2. Separat fil används för att hålla koden organiserad och lätt att underhålla.
   
-  ```js
-  export const resultData = [
-    {
-        condition:()=> ,
-        message: ()=>
-            "",
-        color: "red",
-    },
-    {
-        condition:()=> ,
-        message:()=>
-         "",
-        color: "orange",
-    },
-    {
-        condition: ()=>,
-        message: () =>
-            "",
-        color: "green",
-    },
-];
-
-  ```
+### LocalStrage 
