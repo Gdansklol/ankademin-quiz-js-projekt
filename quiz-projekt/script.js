@@ -1,9 +1,21 @@
 import { quizData } from "./quizData.js";
 import { resultData } from "./resultData.js";
 
+let modeButtons = document.querySelectorAll(".mode-btn");
+
+let currentMode = localStorage.getItem("themeMode") || "light";
+
 let toggleMode = (mode) => {
     document.body.className = ""; 
-    document.body.classList.add(`${mode}-mode`);
+    document.body.classList.add(mode + "-mode"); 
+
+    localStorage.setItem("themeMode", mode); 
+};
+let restoreMode = () => {
+    document.body.className = "";
+
+    let className = currentMode + "-mode";
+    document.body.classList.add(className);
 };
 
 document.querySelectorAll(".mode-btn").forEach((btn) => {
@@ -46,6 +58,7 @@ let startQuiz = () => {
 
         quizForm.appendChild(section);
     });
+    console.log("Quiz-rendering klar"); 
 };
 
 let checkAllAnswered = () => {
@@ -87,7 +100,6 @@ let calculateResults = () => {
             resultItem.textContent = `Fråga ${index + 1}: Fel!`;
             resultItem.style.color = "red";
         }
-
         resultList.append(resultItem);
     });
 
@@ -101,6 +113,11 @@ let calculateResults = () => {
     document.getElementById("result-container").style.display = "block";
 };
 
-document.getElementById("submit-quiz").addEventListener("click", calculateResults);
+restoreMode(); 
+startQuiz(); 
 
-startQuiz();
+document.getElementById("submit-quiz").addEventListener("click", calculateResults);
+modeButtons.forEach(btn => {
+    btn.addEventListener("click",()=> toggleMode(btn.dataset.mode));
+});
+

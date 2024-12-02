@@ -10,6 +10,7 @@
 - **const** om omtilldelning inte krävs.
 
 ## Projektfunktioner
+
 ### Huvudfunktioner
 1. Mörkt/Ljust läge: Växla mellan mörkt och ljust läge 
 för en bättre användarupplevelse.
@@ -26,13 +27,16 @@ Användaren ser vilka frågor som besvarades rätt och fel i detalj.
 <hr>
 
 ## Tekniska Detaljer
+
 ### 1.  Dynamisk rendering av frågor
 
 <h3>Frågor och svarsalternativ skapas dynamiskt baserat 
-på quizData. Detta säkerställer att HTML hålls enkel och 
+på quizData. </h3>
+<br>
+<h3>Detta säkerställer att HTML hålls enkel och 
 att nya frågor kan läggas till genom att bara uppdatera 
-datafilen.
-</h3>
+datafilen.</h3>
+
 
 - Sant/Falskt: 
 Två radio-knappar genereras för varje fråga, 
@@ -51,7 +55,7 @@ med rätt svar i quizData:
 Resultatet klassificeras:
 < 50%: Underkänt (rött).
 50%-75%: Bra (orange).
-> 75%: Riktigt bra jobbat (grönt)
+- 75%: Riktigt bra jobbat (grönt)
 
 ### 3.3. Visning av detaljerat resultat
 
@@ -59,8 +63,8 @@ Resultatet klassificeras:
  För varje fråga:
 
 > Om svaret är rätt: visas som "Rätt!" i grönt.
-> Om svaret är fel: visas som "Fel!" i rött tillsammans
-  med rätt svar.
+>> Om svaret är fel: visas som "Fel!" i rött
+   tillsammans med rätt svar.
 > Detta görs med hjälp av en loop genom alla frågor och 
   användarens val.
 
