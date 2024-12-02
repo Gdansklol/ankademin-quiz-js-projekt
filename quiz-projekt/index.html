@@ -9,29 +9,31 @@
     <script src="script.js" type="module" defer></script>
 </head>
 <body>
-    <div class="quiz-container">
-
+    <main class="quiz-container">
         <header>
-            <h2>Ankademin Världen Runt</h2>
-            <h4>av FE-24 Cruella Båmi १✌˚◡˚✌५</h4>
+            <h1>Ankademin Världen Runt</h1>
+            <p>av FE-24 Cruella Båmi १✌˚◡˚✌५</p>
             <h2>Välkommen till quizet!</h2>
             <div class="mode-switch">
                 <button class="mode-btn" data-mode="dark">Mörkt Läge</button>
                 <button class="mode-btn" data-mode="light">Ljust Läge</button>
             </div>
         </header>
-
-        <section id="quiz-form"></section>
         
-        <section id="result-container">
+        <form id="quiz-form" aria-labelledby="quiz-header">
+            <section>
+          
+            </section>
+        </form>
+        
+        <section id="result-container" aria-live="polite">
             <p id="result-message"></p>
-            <ul id="result-list"></ul>
+            <ul id="result-list" role="list"></ul>
         </section>
 
         <div class="quiz-controls">
-            <button id="submit-quiz">Visa Resultat</button>
+            <button id="submit-quiz" type="button">Visa Resultat</button>
         </div>
-
-    </div>
+    </main>
 </body>
 </html>

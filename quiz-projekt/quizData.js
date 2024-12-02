@@ -34,5 +34,13 @@ export const quizData = [
         title: "6. Vad heter den traditionella dansen från Brasilien? (Välj ett av alternativen)",
         options: ["a. Cancan", "b. Flamenco", "c. Samba", "d. Salsa"],
         correct: [3], 
-    }
+    },
+    {
+        id: "quiz7",
+        title: "7. Sveriges traditionella klädsel kallas 'Folkdräkt'.\nUnder slutet av 1600-talet bars den bara i vissa regioner,\nmen på 1700-talet blev den populär i hela landet.\nFolkdräkten består av fyra färger: blå, vit, och två andra färger.\nVilka två saknade färger är det? (Välj två alternativ)",
+        options: ["a. Brun", "b. Grön", "c. Rosa", "d. Gul"],
+        correct: [2, 4]
+    },
+    
 ];
+

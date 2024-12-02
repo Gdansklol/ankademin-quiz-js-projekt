@@ -58,14 +58,13 @@ Resultatet klassificeras:
     let resultMessage = document.getElementById("result-message");
 
     if (percentage < 50) {
-        resultMessage.textContent = "";
+        resultMessage.textContent = "50%: Underkänt";
         resultMessage.style.color = "red";
     } else if (percentage <= 75) {
-        resultMessage.textContent = "";
+        resultMessage.textContent = "50%-75%: Bra ";
         resultMessage.style.color = "orange";
     } else {
-        resultMessage.textContent = "";
-        resultMessage.style.color = "green";
+        resultMessage.textContent = "75%: Riktigt bra jobbat ";
     }
 ```
 ### 3.3. Visning av detaljerat resultat
@@ -79,4 +78,32 @@ Resultatet klassificeras:
 > Detta görs med hjälp av en loop genom alla frågor och 
   användarens val.
 
+### Updatering av resultData.js
+
+1. Quizresultatdata hanteras som **en array av objekt** för bättre struktur 
+    och återanvändbarhet.
+2. Separat fil används för att hålla koden organiserad och lätt att underhålla.
   
+  ```js
+  export const resultData = [
+    {
+        condition:()=> ,
+        message: ()=>
+            "",
+        color: "red",
+    },
+    {
+        condition:()=> ,
+        message:()=>
+         "",
+        color: "orange",
+    },
+    {
+        condition: ()=>,
+        message: () =>
+            "",
+        color: "green",
+    },
+];
+
+  ```
