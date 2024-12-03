@@ -9,6 +9,23 @@
 
 - **const** om omtilldelning inte krävs.
 
+## Varför "type=module" behövs för att koppla quizData och resultData:
+1. ES6-moduler kräver "type=module":
+- import och export för att dela data mellan filer (som quizData och resultData), måste skriptet deklareras som en modul med type="module".
+
+2. Globalt scope isoleras:
+- Moduler körs i ett separat scope. Utan type="module" kan inte variabler och funktioner delas mellan filer via import/export.
+
+3. Modulens filvägar aktiveras:
+- Moduler kräver att du använder relativa filvägar (t.ex. ./quizData.js). Utan type="module" ignoreras dessa.
+
+4. Lösning på ditt problem:
+- Utan type="module" kunde quizData och resultData inte importeras korrekt, och därför fungerade inte din kod.
+
+** - För att använda moderna ES6-moduler och koppla data 
+mellan filer måste <script> ha type="module".**
+
+
 ## Projektfunktioner
 
 ### Huvudfunktioner
@@ -57,13 +74,13 @@ Resultatet klassificeras:
 50%-75%: Bra (orange).
 - 75%: Riktigt bra jobbat (grönt)
 
-### 3.3. Visning av detaljerat resultat
+### 3.Visning av detaljerat resultat
 
-- Användarens svar matchas med fråge-ID i quizData.
+> Användarens svar matchas med fråge-ID i quizData.
  För varje fråga:
 
 > Om svaret är rätt: visas som "Rätt!" i grönt.
->> Om svaret är fel: visas som "Fel!" i rött
+> Om svaret är fel: visas som "Fel!" i rött
    tillsammans med rätt svar.
 > Detta görs med hjälp av en loop genom alla frågor och 
   användarens val.
@@ -73,5 +90,49 @@ Resultatet klassificeras:
 1. Quizresultatdata hanteras som **en array av objekt** för bättre struktur 
     och återanvändbarhet.
 2. Separat fil används för att hålla koden organiserad och lätt att underhålla.
-  
-### LocalStrage 
+--- 
+### Lokal lagring (Local Storage)
+
+- Lokal lagring används för att spara data i webbläsaren permanent.
+- Data sparas som strängar, vilket innebär att mer komplexa data   
+(som objekt eller listor) måste konverteras med `JSON.stringify()`
+ vid lagring och `JSON.parse()` vid hämtning.
+
+---
+
+## Grundläggande funktioner
+1. **Spara data:**
+   ```js
+   localStorage.setItem("key", "value");
+   ```
+   - Ex
+   ```js
+   localStorage.setItem("themeMode", "dark");
+
+   ```
+- 2.  Hämta data:
+```js
+let värde = localStorage.getItem("key");
+
+```
+- Ex
+```js
+let theme = localStorage.getItem("themeMode"); 
+
+```
+3. Ta bort data:
+```js
+localStorage.removeItem("key");
+
+```
+- Ex
+```js
+localStorage.removeItem("themeMode");
+
+```
+
+4. Tömma all data:
+```js
+localStorage.clear();
+
+```

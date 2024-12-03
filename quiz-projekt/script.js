@@ -1,9 +1,14 @@
 import { quizData } from "./quizData.js";
 import { resultData } from "./resultData.js";
 
+let quisForm = document.getElementById("quiz-form");
+let resultContainer = document.querySelector("#result-container");
+let resultMessage = document.getElementById("result-message");
+let resultList = document.getElementById("result-list")
 let modeButtons = document.querySelectorAll(".mode-btn");
 
 let currentMode = localStorage.getItem("themeMode") || "light";
+
 
 let toggleMode = (mode) => {
     document.body.className = ""; 
@@ -113,6 +118,16 @@ let calculateResults = () => {
     document.getElementById("result-container").style.display = "block";
 };
 
+let clearAllData = () => {
+    let deleteDataConfirm = confirm("Vill du radera all data?");
+    if(deleteDataConfirm){
+        console.log("Data kommer att raderas.")
+        localStorage.clear();
+    }else {
+        console.log("Radering avbröts.");
+    }
+};
+
 restoreMode(); 
 startQuiz(); 
 
@@ -120,4 +135,3 @@ document.getElementById("submit-quiz").addEventListener("click", calculateResult
 modeButtons.forEach(btn => {
     btn.addEventListener("click",()=> toggleMode(btn.dataset.mode));
 });
-

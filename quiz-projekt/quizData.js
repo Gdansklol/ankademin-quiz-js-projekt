@@ -97,4 +97,3 @@ export const quizData = [
             correct: [1, 2, 4]
         }
 ];
-
