@@ -1,16 +1,14 @@
 import { quizData } from "./quizData.js";
 import { resultData } from "./resultData.js";
 
-let quisForm = document.getElementById("quiz-form");
+let quizForm = document.getElementById("quiz-form");
 let resultContainer = document.querySelector("#result-container");
 let resultMessage = document.getElementById("result-message");
 let resultList = document.getElementById("result-list")
 let modeButtons = document.querySelectorAll(".mode-btn");
 
-
 let selectedAnswers = JSON.parse(localStorage.getItem("quizAnswers")) || {} ;
 let currentMode = localStorage.getItem("themeMode") || "light";
-
 
 let toggleMode = (mode) => {
     document.body.className = ""; 
@@ -52,7 +50,7 @@ let controlAnswerChange = (quizId, value) => {
 
     let isCheckbox = quizData.find((quiz) => quiz.id === quizId).correct.length > 1;
     if(isCheckbox) {
-        if (selectedAnswers[quizId],includes(value)) {
+        if (selectedAnswers[quizId].includes(value)) {
             selectedAnswers[quizId] = selectedAnswers[quizId].filter((val) => val !== value);
         } else {
             selectedAnswers[quizId].push(value);
@@ -64,8 +62,18 @@ let controlAnswerChange = (quizId, value) => {
 }
 
 let startQuiz = () => {
-    let quizForm = document.getElementById("quiz-form");
     quizForm.innerHTML = ""; 
+
+    if(!quizData || quizData.length === 0){
+        console.error("Inga quiz data tillgängliga");
+
+        let p = document.createElement("p");
+        p.classList.add("p-err-message");
+        p.textContent = "Inga quiz data tillgänglig";
+
+        quizForm.append(p);
+        return;
+    }
 
     quizData.forEach((quiz) => {
         let section = document.createElement("section");
@@ -87,55 +95,44 @@ let startQuiz = () => {
 };
 
 let checkAllAnswered = () => {
-    let allQuestions = [...document.querySelectorAll(".quiz-section")];
-    let unansweredQuestions = allQuestions.filter(
-        (question) => !question.querySelector('input[type="radio"]:checked, input[type="checkbox"]:checked')
-    );
-    if (unansweredQuestions.length > 0) {
+    let unAsweredQuestions = [...document.querySelectorAll(".quiz-section")].filter(
+                                (question)=> !question.querySelector("input:checked"));
+    if(unAsweredQuestions.length > 0) {
         alert("Du måste svara på alla frågor!");
         return false;
     }
-    alert("Fantastiskt! Du har svarat på alla frågor!");
-    return true;
+        alert("Fantastiskt! Du har svarat på alla frågor!");
+        return true;
 };
 
 let calculateResults = () => {
     if (!checkAllAnswered()) return;
 
     let score = 0;
-    let selectedAnswers = [];
-    
-    let resultList = document.getElementById("result-list");
     resultList.textContent = "";
-
+    
     quizData.forEach((quiz, index) => {
         let selectedOptions = [...document.querySelectorAll(`input[name="${quiz.id}"]:checked`)]
             .map((input) => parseInt(input.value));
-        selectedAnswers.push(...selectedOptions);
+        let correctMatches = quiz.correct.filter((answer) => selectedOptions.includes(answer));
+        let isCorrect = correctMatches.length === quiz.correct.length && selectedOptions.length === quiz.correct.length;
 
         let resultItem = document.createElement("li");
-        let correctMatches = quiz.correct.filter((ans) => selectedOptions.includes(ans));
-        let isCorrect =
-            correctMatches.length === quiz.correct.length && selectedOptions.length === quiz.correct.length;
+        resultItem.textContent = `Fråga ${index +1}: ${isCorrect ? "Rätt!" : "Fel"}`;
+        resultItem.style.color = isCorrect ? "green" : "red";
 
-        if (isCorrect) {
+        if(isCorrect) {
             score++;
-            resultItem.textContent = `Fråga ${index + 1}: Rätt!`;
-            resultItem.style.color = "green";
-        } else {
-            resultItem.textContent = `Fråga ${index + 1}: Fel!`;
-            resultItem.style.color = "red";
         }
         resultList.append(resultItem);
     });
 
     let percentage = (score / quizData.length) * 100;
-    let resultMessage = document.getElementById("result-message");
-
     let result = resultData.find((res) => res.condition(percentage));
     resultMessage.textContent = result.message(score, quizData.length, percentage);
     resultMessage.style.color = result.color;
 
+    localStorage.setItem("quizResults", JSON.stringify({score, percentage}));
     resultContainer.style.display = "block";
 };
 

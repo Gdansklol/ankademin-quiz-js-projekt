@@ -10,6 +10,7 @@
 - **const** om omtilldelning inte krävs.
 
 ## Varför "type=module" behövs för att koppla quizData och resultData:
+
 1. ES6-moduler kräver "type=module":
 - import och export för att dela data mellan filer (som quizData och resultData), måste skriptet deklareras som en modul med type="module".
 
@@ -19,7 +20,7 @@
 3. Modulens filvägar aktiveras:
 - Moduler kräver att du använder relativa filvägar (t.ex. ./quizData.js). Utan type="module" ignoreras dessa.
 
-4. Lösning på ditt problem:
+4. Lösning på problem:
 - Utan type="module" kunde quizData och resultData inte importeras korrekt, och därför fungerade inte din kod.
 
 ** - För att använda moderna ES6-moduler och koppla data 
@@ -98,41 +99,4 @@ Resultatet klassificeras:
 (som objekt eller listor) måste konverteras med `JSON.stringify()`
  vid lagring och `JSON.parse()` vid hämtning.
 
----
 
-## Grundläggande funktioner
-1. **Spara data:**
-   ```js
-   localStorage.setItem("key", "value");
-   ```
-   - Ex
-   ```js
-   localStorage.setItem("themeMode", "dark");
-
-   ```
-- 2.  Hämta data:
-```js
-let värde = localStorage.getItem("key");
-
-```
-- Ex
-```js
-let theme = localStorage.getItem("themeMode"); 
-
-```
-3. Ta bort data:
-```js
-localStorage.removeItem("key");
-
-```
-- Ex
-```js
-localStorage.removeItem("themeMode");
-
-```
-
-4. Tömma all data:
-```js
-localStorage.clear();
-
-```
