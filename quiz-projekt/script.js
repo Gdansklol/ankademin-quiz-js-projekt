@@ -6,6 +6,8 @@ let resultContainer = document.querySelector("#result-container");
 let resultMessage = document.getElementById("result-message");
 let resultList = document.getElementById("result-list")
 let modeButtons = document.querySelectorAll(".mode-btn");
+let clearQuiz = document.querySelector("#clear-quiz");
+    console.log(clearQuiz);
 
 let selectedAnswers = JSON.parse(localStorage.getItem("quizAnswers")) || {} ;
 let currentMode = localStorage.getItem("themeMode") || "light";
@@ -141,6 +143,15 @@ let clearAllData = () => {
     if(deleteDataConfirm){
         console.log("Data kommer att raderas.")
         localStorage.clear();
+
+        localStorage.setItem("themeMode","light");
+        selectedAnswers = {} ;
+        currentMode = "light";
+
+        restoreMode();
+        
+        startQuiz();
+        resultContainer.style.display = "none";
     }else {
         console.log("Radering avbröts.");
     }
@@ -153,3 +164,9 @@ document.getElementById("submit-quiz").addEventListener("click", calculateResult
 modeButtons.forEach(btn => {
     btn.addEventListener("click",()=> toggleMode(btn.dataset.mode));
 });
+if(clearQuiz) {
+    clearQuiz.addEventListener("click", ()=> {
+       console.log("Rensa och återställ-knappen klickade");
+       clearAllData();
+    });
+};
