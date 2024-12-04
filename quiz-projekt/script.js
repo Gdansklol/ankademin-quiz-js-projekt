@@ -15,19 +15,13 @@ let currentMode = localStorage.getItem("themeMode") || "light";
 let toggleMode = (mode) => {
     document.body.className = ""; 
     document.body.classList.add(mode + "-mode"); 
-
     localStorage.setItem("themeMode", mode); 
 };
+
 let restoreMode = () => {
     document.body.className = "";
-
-    let className = currentMode + "-mode";
-    document.body.classList.add(className);
+    document.body.classList.add(currentMode + "-mode");
 };
-
-document.querySelectorAll(".mode-btn").forEach((btn) => {
-    btn.addEventListener("click", () => toggleMode(btn.dataset.mode));
-});
 
 let createOptionElement = (quiz, option, optionIndex) => {
     let label = document.createElement("label");
@@ -38,6 +32,12 @@ let createOptionElement = (quiz, option, optionIndex) => {
     input.name = quiz.id;
     input.value = optionIndex + 1;
 
+    if (selectedAnswers[quiz.id]?.includes(optionIndex + 1)) {
+        input.checked = true;
+    }
+    
+    input.addEventListener("change",() => controlAnswerChange(quiz.id, optionIndex +1));
+    
     let span = document.createElement("span");
     span.textContent = option;
 
