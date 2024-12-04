@@ -7,6 +7,8 @@ let resultMessage = document.getElementById("result-message");
 let resultList = document.getElementById("result-list")
 let modeButtons = document.querySelectorAll(".mode-btn");
 
+
+let selectedAnswers = JSON.parse(localStorage.getItem("quizAnswers")) || {} ;
 let currentMode = localStorage.getItem("themeMode") || "light";
 
 
@@ -42,6 +44,24 @@ let createOptionElement = (quiz, option, optionIndex) => {
     label.append(input, span);
     return label;
 };
+
+let controlAnswerChange = (quizId, value) => {
+    if(!selectedAnswers[quizId]) {
+        selectedAnswers[quizId] = [];
+    }
+
+    let isCheckbox = quizData.find((quiz) => quiz.id === quizId).correct.length > 1;
+    if(isCheckbox) {
+        if (selectedAnswers[quizId],includes(value)) {
+            selectedAnswers[quizId] = selectedAnswers[quizId].filter((val) => val !== value);
+        } else {
+            selectedAnswers[quizId].push(value);
+        }
+    } else {
+        selectedAnswers[quizId] = [value];
+    }
+    localStorage.setItem("quizAnswers", JSON.stringify(selectedAnswers))
+}
 
 let startQuiz = () => {
     let quizForm = document.getElementById("quiz-form");
@@ -84,6 +104,7 @@ let calculateResults = () => {
 
     let score = 0;
     let selectedAnswers = [];
+    
     let resultList = document.getElementById("result-list");
     resultList.textContent = "";
 
@@ -115,7 +136,7 @@ let calculateResults = () => {
     resultMessage.textContent = result.message(score, quizData.length, percentage);
     resultMessage.style.color = result.color;
 
-    document.getElementById("result-container").style.display = "block";
+    resultContainer.style.display = "block";
 };
 
 let clearAllData = () => {
