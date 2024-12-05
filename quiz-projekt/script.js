@@ -7,20 +7,19 @@ let resultMessage = document.getElementById("result-message");
 let resultList = document.getElementById("result-list")
 let modeButtons = document.querySelectorAll(".mode-btn");
 let clearQuiz = document.querySelector("#clear-quiz");
-    console.log(clearQuiz);
 
 let selectedAnswers = JSON.parse(localStorage.getItem("quizAnswers")) || {} ;
-let currentMode = localStorage.getItem("themeMode") || "light";
+let currentBgColor = localStorage.getItem("bgColor") || "default-color";
 
-let toggleMode = (mode) => {
+let changeBackground = (color) => {
     document.body.className = ""; 
-    document.body.classList.add(mode + "-mode"); 
-    localStorage.setItem("themeMode", mode); 
+    document.body.classList.add(color + "-mode"); 
+    localStorage.setItem("bgColor", color); 
 };
 
-let restoreMode = () => {
-    document.body.className = "";
-    document.body.classList.add(currentMode + "-mode");
+let pageLoadingBackground = () => {
+    currentBgColor = localStorage.getItem("bgColor") || "default-color"
+    document.body.classList.add(currentBgColor + "-mode");
 };
 
 let createOptionElement = (quiz, option, optionIndex) => {
@@ -60,11 +59,12 @@ let controlAnswerChange = (quizId, value) => {
     } else {
         selectedAnswers[quizId] = [value];
     }
+
     localStorage.setItem("quizAnswers", JSON.stringify(selectedAnswers))
 }
 
 let startQuiz = () => {
-    quizForm.innerHTML = ""; 
+    quizForm.textContent = ""; 
 
     if(!quizData || quizData.length === 0){
         console.error("Inga quiz data tillgängliga");
@@ -85,20 +85,20 @@ let startQuiz = () => {
         header.textContent = quiz.title;
         header.classList.add("quiz-header");
 
-        section.appendChild(header);
+        section.append(header);
 
         quiz.options.forEach((option, optionIndex) => {
-            section.appendChild(createOptionElement(quiz, option, optionIndex));
+            section.append(createOptionElement(quiz, option, optionIndex));
         });
 
-        quizForm.appendChild(section);
+        quizForm.append(section);
     });
     console.log("Quiz-rendering klar"); 
 };
 
 let checkAllAnswered = () => {
     let unAsweredQuestions = [...document.querySelectorAll(".quiz-section")].filter(
-                                (question)=> !question.querySelector("input:checked"));
+                                (section)=> !section.querySelector("input:checked"));
     if(unAsweredQuestions.length > 0) {
         alert("Du måste svara på alla frågor!");
         return false;
@@ -110,12 +110,13 @@ let checkAllAnswered = () => {
 let calculateResults = () => {
     if (!checkAllAnswered()) return;
 
-    let score = 0;
     resultList.textContent = "";
-    
+    let score = 0;
+
     quizData.forEach((quiz, index) => {
-        let selectedOptions = [...document.querySelectorAll(`input[name="${quiz.id}"]:checked`)]
-            .map((input) => parseInt(input.value));
+        let selectedInputs = [...document.querySelectorAll(`input[name="${quiz.id}"]:checked`)];
+        let selectedOptions = selectedInputs.map((input) => parseInt(input.value));
+        
         let correctMatches = quiz.correct.filter((answer) => selectedOptions.includes(answer));
         let isCorrect = correctMatches.length === quiz.correct.length && selectedOptions.length === quiz.correct.length;
 
@@ -139,17 +140,11 @@ let calculateResults = () => {
 };
 
 let clearAllData = () => {
-    let deleteDataConfirm = confirm("Vill du radera all data?");
-    if(deleteDataConfirm){
-        console.log("Data kommer att raderas.")
+    if(confirm("Vill du radera all data?")){
         localStorage.clear();
-
-        localStorage.setItem("themeMode","light");
         selectedAnswers = {} ;
-        currentMode = "light";
-
-        restoreMode();
-        
+        document.body.className = "";
+        document.body.classList.add("default-color-mode")
         startQuiz();
         resultContainer.style.display = "none";
     }else {
@@ -157,12 +152,12 @@ let clearAllData = () => {
     }
 };
 
-restoreMode(); 
+pageLoadingBackground();
 startQuiz(); 
 
 document.getElementById("submit-quiz").addEventListener("click", calculateResults);
 modeButtons.forEach(btn => {
-    btn.addEventListener("click",()=> toggleMode(btn.dataset.mode));
+    btn.addEventListener("click",()=> changeBackground(btn.dataset.mode));
 });
 if(clearQuiz) {
     clearQuiz.addEventListener("click", ()=> {
