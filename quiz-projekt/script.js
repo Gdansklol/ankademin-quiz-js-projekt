@@ -159,9 +159,4 @@ document.getElementById("submit-quiz").addEventListener("click", calculateResult
 modeButtons.forEach(btn => {
     btn.addEventListener("click",()=> changeBackground(btn.dataset.mode));
 });
-if(clearQuiz) {
-    clearQuiz.addEventListener("click", ()=> {
-       console.log("Rensa och återställ-knappen klickade");
-       clearAllData();
-    });
-};
+clearQuiz.addEventListener("click", clearAllData);
