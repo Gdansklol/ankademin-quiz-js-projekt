@@ -7,6 +7,8 @@ let resultMessage = document.getElementById("result-message");
 let resultList = document.getElementById("result-list")
 let modeButtons = document.querySelectorAll(".mode-btn");
 let clearQuiz = document.querySelector("#clear-quiz");
+let sortOrderSelect = document.querySelector("#sort-order-quiz");
+let sortButton = document.querySelector("#sort-button");
 
 let selectedAnswers = JSON.parse(localStorage.getItem("quizAnswers")) || {} ;
 let currentBgColor = localStorage.getItem("bgColor") || "default-color";
@@ -63,6 +65,8 @@ let controlAnswerChange = (quizId, value) => {
     localStorage.setItem("quizAnswers", JSON.stringify(selectedAnswers))
 }
 
+
+
 let startQuiz = () => {
     quizForm.textContent = ""; 
 
@@ -95,6 +99,20 @@ let startQuiz = () => {
     });
     console.log("Quiz-rendering klar"); 
 };
+
+let sortQuiz = () => {
+    let sortOrder = sortOrderSelect.value;
+   
+    quizData.sort((a,b)=> {
+       if(sortOrder === "asc") {
+           return a.id - b.id ;
+       } else if (sortOrder === "desc") {
+           return b.id - a.id
+       }
+       return 0;
+    });
+        startQuiz();
+   };
 
 let checkAllAnswered = () => {
     let unAsweredQuestions = [...document.querySelectorAll(".quiz-section")].filter(
@@ -160,3 +178,7 @@ modeButtons.forEach(btn => {
     btn.addEventListener("click",()=> changeBackground(btn.dataset.mode));
 });
 clearQuiz.addEventListener("click", clearAllData);
+sortButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    sortQuiz();
+});
