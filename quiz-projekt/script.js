@@ -100,8 +100,15 @@ let startQuiz = () => {
     console.log("Quiz-rendering klar"); 
 };
 
+let sortOrderKey = "QuisSortOrder";
+
+let currentSortOrder = localStorage.getItem(sortOrderKey) || "asc";
+sortOrderSelect.value = currentSortOrder;
+
 let sortQuiz = () => {
     let sortOrder = sortOrderSelect.value;
+
+    localStorage.setItem(sortOrderKey, sortOrder);
    
     quizData.sort((a,b)=> {
        if(sortOrder === "asc") {
@@ -113,6 +120,15 @@ let sortQuiz = () => {
     });
         startQuiz();
    };
+
+quizData.sort((a,b) => {
+    if(currentSortOrder === "asc") {
+        return a.id - b.id;
+    } else if (currentSortOrder === "desc") {
+        return b.id - a.id
+    }
+    return 0;
+})
 
 let checkAllAnswered = () => {
     let unAsweredQuestions = [...document.querySelectorAll(".quiz-section")].filter(
@@ -160,11 +176,19 @@ let calculateResults = () => {
 let clearAllData = () => {
     if(confirm("Vill du radera all data?")){
         localStorage.clear();
+
+        localStorage.setItem(sortOrderKey, "asc");
+        sortOrderSelect.value = "asc";
+
         selectedAnswers = {} ;
         document.body.className = "";
-        document.body.classList.add("default-color-mode")
+        document.body.classList.add("default-color-mode");
+
+        quizData.sort((a,b) => a.id - b.id);
         startQuiz();
+
         resultContainer.style.display = "none";
+        console.log("Data har rensats nu.")
     }else {
         console.log("Radering avbröts.");
     }
