@@ -36,7 +36,8 @@ h1 {
     line-height: 1.2;
 }
 
-.quiz-section {
+.quiz-section,
+.sort-section {
     border: 1px solid #dddddd;
     padding: 16px;
     border-radius: 8px;
@@ -127,6 +128,66 @@ button:hover {
 #clear-quiz {
     background-color: #fff8c6;
     color: #333333;
+}
+#sort-order-quiz {
+    margin-bottom: 20xp;
+}
+
+.sort-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 16px;
+    gap: 12px;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.sort-section select {
+    width: 100%;
+    max-width: 320px;
+    height: 50px;
+    padding: 12px;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-family: 'Poppins', Arial, sans-serif;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    margin-bottom: 28px;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sort-section select:focus {
+    border-color: #444444;
+    outline: none;
+    background-color: #f3f3f3;
+}
+
+.sort-section option {
+    padding: 10px;
+    font-size: 1rem;
+    color: #333333;
+}
+
+.sort-section button {
+    margin-top: 26px;
+    width: 100%;
+    max-width: 300px;
+    padding: 14px;
+    font-size: 1rem;
+    font-family:'Poppins', 'Lucida Sans', sans-serif;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    cursor:pointer;
+    transition: background-color 0.3s ease, color 0.3s;
+}
+
+.sort-section button:hover {
+    background-color: #555555;
+    color: #ffffff;
 }
 
 @media (min-width: 768px) {
