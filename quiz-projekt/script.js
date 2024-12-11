@@ -12,6 +12,9 @@ let sortButton = document.querySelector("#sort-button");
 
 let selectedAnswers = JSON.parse(localStorage.getItem("quizAnswers")) || {} ;
 let currentBgColor = localStorage.getItem("bgColor") || "default-color";
+let storedResults = JSON.parse(localStorage.getItem("storedResults")) || [] ;
+let sortOrderKey = "QuizSortOrder";
+let currentSortOrder = localStorage.getItem(sortOrderKey) || "asc";
 
 let changeBackground = (color) => {
     document.body.className = ""; 
@@ -65,21 +68,8 @@ let controlAnswerChange = (quizId, value) => {
     localStorage.setItem("quizAnswers", JSON.stringify(selectedAnswers))
 }
 
-
-
 let startQuiz = () => {
     quizForm.textContent = ""; 
-
-    if(!quizData || quizData.length === 0){
-        console.error("Inga quiz data tillgängliga");
-
-        let p = document.createElement("p");
-        p.classList.add("p-err-message");
-        p.textContent = "Inga quiz data tillgänglig";
-
-        quizForm.append(p);
-        return;
-    }
 
     quizData.forEach((quiz) => {
         let section = document.createElement("section");
@@ -100,35 +90,23 @@ let startQuiz = () => {
     console.log("Quiz-rendering klar"); 
 };
 
-let sortOrderKey = "QuisSortOrder";
+let restoreResults = () => {
+    let restoredResults = JSON.parse(localStorage.getItem("storedResults")) || [];
 
-let currentSortOrder = localStorage.getItem(sortOrderKey) || "asc";
-sortOrderSelect.value = currentSortOrder;
-
-let sortQuiz = () => {
-    let sortOrder = sortOrderSelect.value;
-
-    localStorage.setItem(sortOrderKey, sortOrder);
-   
-    quizData.sort((a,b)=> {
-       if(sortOrder === "asc") {
-           return a.id - b.id ;
-       } else if (sortOrder === "desc") {
-           return b.id - a.id
-       }
-       return 0;
-    });
-        startQuiz();
-   };
-
-quizData.sort((a,b) => {
-    if(currentSortOrder === "asc") {
-        return a.id - b.id;
-    } else if (currentSortOrder === "desc") {
-        return b.id - a.id
+    if (restoredResults.length > 0) {
+        resultList.textContent = "";
+        storedResults.forEach((result)=> {
+            let listItem = document.createElement("li");
+            listItem.textContent = result.text;
+            listItem.style.color = result.color;
+            resultList.append(listItem);
+        });
+        resultMessage.textContent = localStorage.getItem("resultMessage") || "";
+        resultContainer.style.display = "block";
+    } else {
+        console.log("Inag resultat att återställa.")
     }
-    return 0;
-})
+};
 
 let checkAllAnswered = () => {
     let unAsweredQuestions = [...document.querySelectorAll(".quiz-section")].filter(
@@ -146,6 +124,7 @@ let calculateResults = () => {
 
     resultList.textContent = "";
     let score = 0;
+    let resultsToStore = [];
 
     quizData.forEach((quiz, index) => {
         let selectedInputs = [...document.querySelectorAll(`input[name="${quiz.id}"]:checked`)];
@@ -158,6 +137,8 @@ let calculateResults = () => {
         resultItem.textContent = `Fråga ${index +1}: ${isCorrect ? "Rätt!" : "Fel"}`;
         resultItem.style.color = isCorrect ? "green" : "red";
 
+        resultsToStore.push({text: resultItem.textContent, color: resultItem.style.color});
+
         if(isCorrect) {
             score++;
         }
@@ -169,18 +150,35 @@ let calculateResults = () => {
     resultMessage.textContent = result.message(score, quizData.length, percentage);
     resultMessage.style.color = result.color;
 
-    localStorage.setItem("quizResults", JSON.stringify({score, percentage}));
+    localStorage.setItem("storedResults", JSON.stringify(resultsToStore));
+    localStorage.setItem("resultMessage", resultMessage.textContent);
     resultContainer.style.display = "block";
 };
+
+let sortQuiz = () => {
+    let sortOrder = sortOrderSelect.value;
+
+    quizData.sort((a,b)=> {
+       if(sortOrder === "asc") 
+           return a.id - b.id ;
+       if(sortOrder === "desc")
+            return b.id - a.id;
+        return 0;
+    
+    });
+        localStorage.setItem(sortOrderKey, sortOrder);
+        startQuiz();
+        restoreResults();
+   };
 
 let clearAllData = () => {
     if(confirm("Vill du radera all data?")){
         localStorage.clear();
 
-        localStorage.setItem(sortOrderKey, "asc");
-        sortOrderSelect.value = "asc";
-
         selectedAnswers = {} ;
+        storedResults = [];
+        resultList.textContent = "";
+        resultMessage.textContent = "";
         document.body.className = "";
         document.body.classList.add("default-color-mode");
 
@@ -196,6 +194,7 @@ let clearAllData = () => {
 
 pageLoadingBackground();
 startQuiz(); 
+restoreResults();
 
 document.getElementById("submit-quiz").addEventListener("click", calculateResults);
 modeButtons.forEach(btn => {

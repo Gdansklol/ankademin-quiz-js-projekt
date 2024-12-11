@@ -68,12 +68,12 @@ med tydlig koppling till motsvarande label via for-attribut.
 - Resultatet beräknas genom att jämföra användarens svar 
 med rätt svar i quizData:
 
-- *Procentberäkning:* (score / totalQuestions) * 100.
-- **toFixed(0)** används för att visa en hel procentsats utan decimaler.
-Resultatet klassificeras:
+** Resultatet klassificeras: 
+```js
 < 50%: Underkänt (rött).
 50%-75%: Bra (orange).
-- 75%: Riktigt bra jobbat (grönt)
+75%: Riktigt bra jobbat (grönt)
+```
 
 ### 3.Visning av detaljerat resultat
 
@@ -88,15 +88,18 @@ Resultatet klassificeras:
 
 ### Updatering av resultData.js
 
-1. Quizresultatdata hanteras som **en array av objekt** för bättre struktur 
-    och återanvändbarhet.
+1. Quizresultatdata hanteras som **en array av objekt** 
+för bättre struktur och återanvändbarhet.
+
 2. Separat fil används för att hålla koden organiserad och lätt att underhålla.
 --- 
 ### Lokal lagring (Local Storage)
 
 - Lokal lagring används för att spara data i webbläsaren permanent.
+
 - Data sparas som strängar, vilket innebär att mer komplexa data   
-(som objekt eller listor) måste konverteras med `JSON.stringify()`
+(som objekt eller listor) måste konverteras med 
+`JSON.stringify()`
  vid lagring och `JSON.parse()` vid hämtning.
 
 
